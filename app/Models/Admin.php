@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Notifications\AdminResetPasswdNotification;
 use App\Notifications\UpdatedEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,16 +12,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Admin extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    //override
+
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new UpdatedEmailNotification($token));
+        $this->notify(new AdminResetPasswdNotification($token));
     }
+
 
     /**
      * The attributes that are mass assignable.
